@@ -1,5 +1,6 @@
 from merge_data import aggregate_shipments, merge_data
 
+
 def read_file(file):
     """Takes a csv file and creates a hash map of its rows
        with a list of (heading, entry) tuples for each entry
@@ -16,14 +17,18 @@ def read_file(file):
         line = line.strip()
         entries = line.split(",")
 
-        # if i > 0:
         hash_map[i] = []
         for idx, e in enumerate(entries):
             hash_map[i].extend([(headings[idx], e)])
 
     return hash_map
 
+
 def normalize_data0(file):
+    """Takes in csv file of shipment data and returns data relevant to the database in a list
+    params: csv file
+    returns: list of data relevant to the database
+    """
     data = read_file(file)
     res = []
 
@@ -34,6 +39,11 @@ def normalize_data0(file):
 
 
 def conform_data(file):
+    """Takes in csv file of shipment data and returns data relevant to the database in a list
+    params: csv file
+    returns: list of data relevant to the database
+    """
+
     if file == "data/shipping_data_1.csv":
         file0_shipments = aggregate_shipments(read_file(file))
         return merge_data(file0_shipments, read_file("data/shipping_data_2.csv"))

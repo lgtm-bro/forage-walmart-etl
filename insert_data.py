@@ -2,11 +2,13 @@ import sqlite3
 from sqlite3 import Error
 from extract_data import conform_data
 
+
 def create_connection(db_file):
-    """ create a database connection to the SQLite database specified by the db_file
-    :param db_file: database file
-    :return: Connection object or None
+    """takes a list of shipment data and inserts it into the product table and shipment table
+    :param db_file: db_connection, list of shipment data
+    :return: None
     """
+
 
     connection = None
     try:
@@ -29,13 +31,13 @@ def insert_data(conn, data):
     for row in data:
         product_id = None
 
-        cursor.execute("INSERT OR IGNORE INTO product (name) VALUES (?)", [row[0]])
+        cursor.execute(
+            "INSERT OR IGNORE INTO product (name) VALUES (?)", [row[0]])
         product_id = cursor.lastrowid
 
         cursor.execute("""INSERT INTO shipment (product_id, quantity, origin, destination)
         values(?, ?, ?, ?)""",
-        [product_id, *row[1:]])
-
+                       [product_id, *row[1:]])
 
 
 file0_data = conform_data("data/shipping_data_0.csv")
